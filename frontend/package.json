@@ -1,0 +1,30 @@
+{
+	"name": "camp-buidl",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next link",
+		"marketplace": "npx create-web3-dapp marketplace"
+	},
+	"dependencies": {
+		"@lens-protocol/wagmi": "^0.4.1",
+		"@rainbow-me/rainbowkit": "^0.8.1",
+		"alchemy-sdk": "^2.3.0",
+		"lucide-react": "^0.118.0",
+		"next": "13.1.2",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-spinners": "^0.13.8",
+		"wagmi": "^0.9.2"
+	},
+	"devDependencies": {
+		"autoprefixer": "^10.4.13",
+		"eslint": "8.20.0",
+		"eslint-config-next": "12.2.3",
+		"postcss": "^8.4.21",
+		"tailwindcss": "^3.2.7"
+	}
+}

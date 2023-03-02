@@ -1,0 +1,101 @@
+.nft_collection_info_panel_container{
+    display: flex;
+    background-size: cover;
+    width: 100%;
+    justify-content: center;
+    padding: 2rem;
+
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    width: 891px;
+    justify-content: center;
+    align-items:center;
+}
+
+.top_row{
+    display: flex;
+    align-items: center;
+width: 100%;  
+}
+
+.image_title_container{
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+
+}
+
+.image_container{
+    height: 120px;
+    width: 120px;
+    border-radius: 100%;
+    background-color: white;
+    margin-right: 22px;
+
+   }
+   
+   .image_container img{
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       border-radius: 100%;
+   }
+
+   .collection_name_container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: .3rem;
+   }
+
+   .collection_name{
+    font-size: 24px;
+    font-weight: 700;
+   }
+
+
+   .collection_deployer{
+    font-size: 20px;
+   }
+
+   .info_container{
+    padding: 1rem;
+    border-radius: 0 6px 6px 0;
+   }
+
+   .name_symbol_container{
+    margin-bottom: 1rem;
+}
+   .name_symbol_container h1{
+    font-size: 1.4rem;
+    margin: 0;
+   }
+.description_container{
+
+    text-align: justify;
+}
+   .secondary_info{
+    display: flex;
+    margin-top: 1rem;
+    align-items: center;
+    column-gap: 3rem;
+   }
+
+   .secondary_info .title{
+   color: #4E4E4E;
+   font-weight: 700;
+   }
+   .secondary_info .value{
+    font-weight: 700;
+    }
+
+   .social_buttons_container{
+     display: flex;
+     align-items: center;
+     column-gap: 2rem;
+     cursor: pointer;
+
+   }

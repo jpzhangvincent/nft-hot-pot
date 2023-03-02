@@ -1,2 +1,2 @@
 # nft-hot-pot
-Dynamic NFT x Generative AI mixer
+Dynamic NFT x AI mixer
