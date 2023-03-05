@@ -1,0 +1,36 @@
+{
+    "name": "CampBuidl #27",
+    "edition": 27,
+    "image": "replace actual image url of ipfs",
+    "external_url": "",
+    "attributes": [
+        {
+            "trait_type": "BODY",
+            "value": "1-0 Neutral"
+        },
+        {
+            "trait_type": "HEAD",
+            "value": "2-0 Hat"
+        },
+        {
+            "trait_type": "SHOES",
+            "value": "1-0 Pink Boots"
+        },
+        {
+            "trait_type": "HAND",
+            "value": "1-0 Crayon"
+        },
+        {
+            "trait_type": "CLOTHES",
+            "value": "1-0 Black Jumper"
+        },
+        {
+            "trait_type": "JEWELRY",
+            "value": "1-0 chain neck"
+        },
+        {
+            "trait_type": "BACKGROUND",
+            "value": "Blue"
+        }
+    ]
+}

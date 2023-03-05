@@ -1,45 +1,57 @@
 //SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity ^0.8.4;
 
 import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
-import "@openzeppelin/contracts@4.6.0/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts@4.6.0/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract Flower is ERC721, ERC721URIStorage, KeeperCompatibleInterface {
     using Counters for Counters.Counter;
 
     Counters.Counter public tokenIdCounter;
- 
-   // Metadata information for each stage of the NFT on IPFS.
+
+    // Metadata information for each stage of the NFT on IPFS.
     string[] IpfsUri = [
         "https://ipfs.io/ipfs/QmYaTsyxTDnrG4toc8721w62rL4ZBKXQTGj9c9Rpdrntou/seed.json",
         "https://ipfs.io/ipfs/QmYaTsyxTDnrG4toc8721w62rL4ZBKXQTGj9c9Rpdrntou/purple-sprout.json",
         "https://ipfs.io/ipfs/QmYaTsyxTDnrG4toc8721w62rL4ZBKXQTGj9c9Rpdrntou/purple-blooms.json"
-    ]; 
+    ];
 
     uint256 lastTimeStamp;
     uint256 interval;
 
-    constructor(uint _interval) ERC721("EthDenver23 Flower", "EFD") {
+    constructor(uint256 _interval) ERC721("EthDenver23 Flower", "EFD") {
         interval = _interval;
         lastTimeStamp = block.timestamp;
     }
 
-    function checkUpkeep(bytes calldata /* checkData */) external view override returns (bool upkeepNeeded, bytes memory /* performData */) {
+    function checkUpkeep(
+        bytes calldata /* checkData */
+    )
+        external
+        view
+        override
+        returns (
+            bool upkeepNeeded,
+            bytes memory /* performData */
+        )
+    {
         uint256 tokenId = tokenIdCounter.current() - 1;
         bool done;
         if (flowerStage(tokenId) >= 2) {
             done = true;
         }
 
-        upkeepNeeded = !done && ((block.timestamp - lastTimeStamp) > interval);        
+        upkeepNeeded = !done && ((block.timestamp - lastTimeStamp) > interval);
         // We don't use the checkData in this example. The checkData is defined when the Upkeep was registered.
     }
 
-    function performUpkeep(bytes calldata /* performData */) external override {
+    function performUpkeep(
+        bytes calldata /* performData */
+    ) external override {
         //We highly recommend revalidating the upkeep in the performUpkeep function
-        if ((block.timestamp - lastTimeStamp) > interval ) {
-            lastTimeStamp = block.timestamp;            
+        if ((block.timestamp - lastTimeStamp) > interval) {
+            lastTimeStamp = block.timestamp;
             uint256 tokenId = tokenIdCounter.current() - 1;
             growFlower(tokenId);
         }
@@ -54,7 +66,9 @@ contract Flower is ERC721, ERC721URIStorage, KeeperCompatibleInterface {
     }
 
     function growFlower(uint256 _tokenId) public {
-        if(flowerStage(_tokenId) >= 2){return;}
+        if (flowerStage(_tokenId) >= 2) {
+            return;
+        }
         // Get the current stage of the flower and add 1
         uint256 newVal = flowerStage(_tokenId) + 1;
         // store the new URI
@@ -71,9 +85,7 @@ contract Flower is ERC721, ERC721URIStorage, KeeperCompatibleInterface {
             return 0;
         }
         // Sprout
-        if (
-            compareStrings(_uri, IpfsUri[1]) 
-        ) {
+        if (compareStrings(_uri, IpfsUri[1])) {
             return 1;
         }
         // Must be a Bloom

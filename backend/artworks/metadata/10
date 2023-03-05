@@ -1,0 +1,48 @@
+{
+  "name": "CampBuidl #10",
+  "edition": 10,
+  "image": "https://0x306c0dcaa3d135d61ab68adb87a89e2988110eb8.w3q-g.w3link.io/10.jpg",
+  "external_url": "",
+  "attributes": [
+    {
+      "trait_type": "BODY",
+      "value": "1-0 Neutral"
+    },
+    {
+      "trait_type": "HEAD",
+      "value": "2-0 Hat"
+    },
+    {
+      "trait_type": "SHOES",
+      "value": "1-0 Pink Boots"
+    },
+    {
+      "trait_type": "HAND",
+      "value": "1-0 Crayon"
+    },
+    {
+      "trait_type": "CLOTHES",
+      "value": "1-0 Black Jumper"
+    },
+    {
+      "trait_type": "JEWELRY",
+      "value": "1-0 chain neck"
+    },
+    {
+      "trait_type": "BACKGROUND",
+      "value": "Blue"
+    },
+    {
+      "trait_type": "PROMPT",
+      "value": "value10"
+    },
+    {
+      "trait_type": "TEMPERATURE",
+      "value": "value10"
+    },
+    {
+      "trait_type": "MODEL",
+      "value": "value10"
+    }
+  ]
+}
