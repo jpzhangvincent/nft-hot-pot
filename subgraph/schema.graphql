@@ -1,0 +1,6 @@
+type NFTInfo @entity {
+  id: ID!
+  owner: String!
+  tokenId: String!
+  tokenUri: String
+}

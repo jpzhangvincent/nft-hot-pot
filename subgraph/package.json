@@ -1,0 +1,19 @@
+{
+  "name": "ufogees_graph",
+  "license": "UNLICENSED",
+  "scripts": {
+    "create": "graph create superdev123-hub/nft_hot_pot --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create superdev123-hub/nft_hot_pot --node http://127.0.0.1:8000",
+    "codegen": "graph codegen",
+    "build": "yarn codegen && graph build",
+    "deploy": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ superdev123-hub/nft_hot_pot",
+    "deploy-local": "graph deploy superdev123-hub/nft_hot_pot --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "prettier": "prettier --write '**/*.{ts,js,css,html,json,yaml}'",
+    "auth": "graph auth https://api.thegraph.com/deploy/ 69768e1fb6c82261eae5bb4cdec8814b",
+    "push": "yarn codegen && yarn prettier && yarn build && yarn auth && yarn deploy"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.30.4",
+    "@graphprotocol/graph-ts": "0.27.0"
+  }
+}

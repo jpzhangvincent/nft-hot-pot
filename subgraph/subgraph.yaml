@@ -1,0 +1,24 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: NFTAIMIX
+    network: mumbai
+    source:
+      abi: ERC721
+      startBlock: 27453790
+    mapping:
+      kind: ethereum/eventHandlers
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NFTInfo
+        - Global
+      abis:
+        - name: ERC721
+          file: ./abis/ERC721.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleMintEvent
+      file: ./src/nft_hot_pot.ts
