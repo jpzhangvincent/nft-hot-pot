@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "build": "npx hardhat compile",
-    "deploy-testnet": "npx hardhat run ./scripts/deploy.ts --network MUMBAI",
+    "deploy:polygonTestnet": "npx hardhat run ./scripts/deploy.ts --network MUMBAI",
     "verify": "npx hardhat run ./scripts/verify.ts --network MUMBAI",
     "node": "npx hardhat node",
     "deploy-local": "npx hardhat run ./scripts/CampBuidl_deploy.js --network localhost",
     "create-ethstorage": "npx ethfs-uploader --create --privateKey ${PRIVATE_KEY}",
-    "upload-data": "npx ethfs-uploader ${folder} ${address from create-ethstorage command} --privateKey ${PRIVATE_KEY}"
+    "upload-data": "npx ethfs-uploader ${folder} ${address from create-ethstorage command} --privateKey ${PRIVATE_KEY}",
+    "deploy:scrollTestnet": "npx hardhat run scripts/deploy.ts --network scrollTestnet",
+    "deploy:baseTestnet": "npx hardhat run scripts/deploy.ts --network baseTestnet"
   },
   "license": "ISC",
   "devDependencies": {

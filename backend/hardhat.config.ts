@@ -34,6 +34,16 @@ const config = {
       tags: ["mumbai"],
       gasPrice: 3000000000,
     },
+    scrollTestnet: {
+      url: process.env.SCROLL_TESTNET_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    // for testnet
+    baseTestnet: {
+      url: 'https://goerli.base.org',
+      accounts: [process.env.PRIVATE_KEY as string],
+    }
   },
   typechain: {
     outDir: "typechain",
