@@ -1,6 +1,5 @@
 import { config as loadEnv } from 'dotenv';
 import { SDK, Auth, TEMPLATES, Metadata } from '@infura/sdk';
-loadEnv({path: '../../.env.local'});
 
 console.log(process.env.INFURA_API_KEY)
 console.log(process.env.INFURA_API_KEY_SECRET)

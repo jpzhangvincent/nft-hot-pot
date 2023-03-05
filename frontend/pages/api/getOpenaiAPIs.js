@@ -1,3 +1,4 @@
+// just testing OpenAI APIs
 import { config as loadEnv } from 'dotenv';
 import { Configuration, OpenAIApi} from 'openai'
 loadEnv();

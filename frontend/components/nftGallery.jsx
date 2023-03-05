@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/NftGallery.module.css";
 import { useAccount } from "wagmi";
 
+const contracaddress = '0xe15560062F770d3fc89A8eFc0E4774dF8Be7F99b' 
 
 export default function NFTGallery({}) {
 	const [nfts, setNfts] = useState();
@@ -68,9 +69,10 @@ export default function NFTGallery({}) {
 					tokenid: tokenId,
 					chain: chain
 				}),
-			});
-			const { niftyMetadata } = await res.json();
-			const { name, tags, description, id } = niftyMetadata;
+			}).then((res) => {
+				return (res.json())});
+			console.log("Metadata response:", res)
+			const { name, tags, description, id } = res;
 			return { name, tags, description, id };
 		  });
 	  
@@ -200,8 +202,7 @@ export default function NFTGallery({}) {
 						</div>
 						<div className={styles.button_green}> 
 							<a href="https://lenster.xyz/?text=Hello%20World!&url=https://mycoolapp.xyz&via=MyCoolApp&hashtags=lens,web3" 
-							target="_blank"> Share to Lens </a> 
-							
+							target="_blank"> Share to Lens </a> 			
 						</div>
 					</div>
 				</div>

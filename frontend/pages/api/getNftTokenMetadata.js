@@ -23,12 +23,14 @@ req,res
 
   try {
     const nftMetadata = await alchemy.nft.getNftMetadata(contractaddress, tokenid);
-    if (nftMetadata && nftMetadata.openSea) {
+    
+    if (nftMetadata) {
+      console.log(nftMetadata)
       res.status(200).json({
-        name: nftMetadata.metadata.name,
-        tags: nftMetadata.metadata.attributes,
-        description: nftMetadata.metadata.description,
-        id: nftMetadata.metadata.id,
+          name: nftMetadata.title,
+          tags: nftMetadata.rawMetadata.attributes,
+          description: nftMetadata.description,
+          id: nftMetadata.tokenUri.raw,
       });
     } else {
       res.status(400).json({

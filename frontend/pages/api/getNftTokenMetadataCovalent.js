@@ -27,7 +27,6 @@ export default async function handler(req, res) {
       break; 
   }
 
-  'https://api.covalenthq.com/v1/eth-mainnet/nft/0x05c0a4ad31ccbdcbc61c53f09f4cc428066fd80a/metadata/44/?key=ckey_258582ab5e11435d8a0a4bcf714'
   console.log('Covalent API KEY: ', COVALENT_API_KET)
   console.log('Covalent network: ', covalentnetwork)
   try {
