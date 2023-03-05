@@ -11,7 +11,9 @@
     "create-ethstorage": "npx ethfs-uploader --create --privateKey ${PRIVATE_KEY}",
     "upload-data": "npx ethfs-uploader ${folder} ${address from create-ethstorage command} --privateKey ${PRIVATE_KEY}",
     "deploy:scrollTestnet": "npx hardhat run scripts/deploy.ts --network scrollTestnet",
-    "deploy:baseTestnet": "npx hardhat run scripts/deploy.ts --network baseTestnet"
+    "deploy:baseTestnet": "npx hardhat run scripts/deploy.ts --network baseTestnet",
+    "deploy:auroraTestnet": "npx hardhat run scripts/deploy.ts --network auroraTestnet",
+    "deploy:mantleTestnet": "npx hardhat run scripts/deploy.ts --network mantleTestnet"
   },
   "license": "ISC",
   "devDependencies": {

@@ -43,6 +43,15 @@ const config = {
     baseTestnet: {
       url: 'https://goerli.base.org',
       accounts: [process.env.PRIVATE_KEY as string],
+    },
+    // for aurora
+    auroraTestnet: {
+      url: 'https://testnet.aurora.dev',
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
+    },
+    mantleTestnet: {
+      url: "https://rpc.testnet.mantle.xyz/",
+      accounts: [process.env.PRIVATE_KEY] // Uses the private key from the .env file
     }
   },
   typechain: {
