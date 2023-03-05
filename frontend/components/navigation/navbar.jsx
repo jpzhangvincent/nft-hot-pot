@@ -4,9 +4,9 @@ export default function Navbar() {
 	return (
 		<nav className={styles.navbar}>
 			<a href="https://alchemy.com/?a=create-web3-dapp" target={"_blank"}>
-				<img className={styles.alchemy_logo} src="/cw3d-logo.png"></img>
+				<img className={styles.alchemy_logo} src="/NFTHotpot.jpg"></img>
 			</a>
-			<ConnectButton></ConnectButton>
+			<ConnectButton></ConnectButton>	
 		</nav>
 	);
 }

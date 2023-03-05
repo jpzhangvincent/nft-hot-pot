@@ -9,6 +9,7 @@ export default async function handler(req, res) {
     return;
   }
 
+  console.log("getNftsForOwner for chain:", chain)
   const settings = {
     apiKey: process.env.ALCHEMY_API_KEY,
     network: Network[chain],

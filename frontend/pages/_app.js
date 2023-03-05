@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import Head from 'next/head'
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
@@ -45,6 +46,11 @@ const wagmiClient = createClient({
 export { WagmiConfig, RainbowKitProvider };
 function MyApp({ Component, pageProps }) {
 	return (
+		<>
+		<Head>
+        	<link rel="stylesheet" href="https://lens.xyz/widget-styles.css" />
+			<script async src="https://lens.xyz/widget.js"></script>
+      	</Head>
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider
 				modalSize="compact"
@@ -56,6 +62,7 @@ function MyApp({ Component, pageProps }) {
 				</MainLayout>
 			</RainbowKitProvider>
 		</WagmiConfig>
+	 </>
 	);
 }
 

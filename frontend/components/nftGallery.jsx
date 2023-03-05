@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/NftGallery.module.css";
 import { useAccount } from "wagmi";
 
+
 export default function NFTGallery({}) {
 	const [nfts, setNfts] = useState();
 	const [walletOrCollectionAddress, setWalletOrCollectionAddress] =
@@ -12,6 +13,29 @@ export default function NFTGallery({}) {
 	const [isLoading, setIsloading] = useState(false);
 	const { address, isConnected } = useAccount();
 	const [chain, setChain] = useState(process.env.NEXT_PUBLIC_ALCHEMY_NETWORK);
+	const [selectedNfts, setSelectedNfts] = useState([]);
+	const [nftDetails, setNftDetails] = useState([]);
+	const [imagePrompt, setImagePrompt] = useState(null);
+	const [imageUrl, setImageUrl] = useState(null);
+
+	useEffect(() => {
+		// Here, you can add any logic that you want to happen immediately
+		// after selectedNfts state changes.
+		console.log(selectedNfts);
+	  }, [selectedNfts]);
+	
+	  const handleSelectNft = (nft) => {
+		const index = selectedNfts.findIndex((selectedNft) => selectedNft.tokenId === nft.tokenId);
+		if (index !== -1) {
+		  setSelectedNfts((prevSelectedNfts) => {
+			const newSelectedNfts = [...prevSelectedNfts];
+			newSelectedNfts.splice(index, 1);
+			return newSelectedNfts;
+		  });
+		} else {
+		  setSelectedNfts((prevSelectedNfts) => [...prevSelectedNfts, nft]);
+		}
+	};
 
 	const changeFetchMethod = (e) => {
 		switch (e.target.value) {
@@ -30,6 +54,55 @@ export default function NFTGallery({}) {
 		}
 		setFetchMethod(e.target.value);
 	};
+
+	const generateTextPrompt = async () => {
+		console.log("Text Prompt", chain)
+		if (selectedNfts.length > 0) {
+		  const detailsPromises = selectedNfts.map(async (nft) => {
+			const { contract, tokenId } = nft;
+			const res = await fetch('/api/getNftTokenMetadata', {
+			  method: "POST",
+			  'Content-Type': 'application/json',
+			  body: JSON.stringify({
+					contractaddress: contract,
+					tokenid: tokenId,
+					chain: chain
+				}),
+			});
+			const { niftyMetadata } = await res.json();
+			const { name, tags, description, id } = niftyMetadata;
+			return { name, tags, description, id };
+		  });
+	  
+		  const nftDetailsTemp = await Promise.all(detailsPromises);
+		  setNftDetails(nftDetailsTemp);
+		  console.log(nftDetailsTemp, "Updated details");
+		  const res = await fetch('/api/getImagePrompt', {
+			method: "POST",
+			'Content-Type': 'application/json',
+			body: JSON.stringify({
+				nftMetadata: nftDetails
+			}),
+			}).then((res) => res.json());
+			console.log(res)
+			setImagePrompt(res.imagePrompt.content);
+		}
+	};
+
+	const getNftImage = async () => {
+		const res = await fetch('/api/getNftImage', {
+			method: "POST",
+			'Content-Type': 'application/json',
+			body: JSON.stringify({
+				imagePrompt
+			}),
+			}).then((res) => res.json());
+			console.log(res.imageUrl)
+			const imageUrl = res.imageUrl;
+			setImageUrl(imageUrl)
+			// Download image from URL
+	};
+	
 	const fetchNFTs = async (pagekey) => {
 		setIsloading(true);
 		setNfts();
@@ -100,14 +173,17 @@ export default function NFTGallery({}) {
 						<div className={styles.select_container_alt}>
 							<select
 								onChange={(e) => {
+									console.log("select:",e.target.value)
 									setChain(e.target.value);
+									console.log("select2:",chain)
+
 								}}
 								defaultValue={process.env.ALCHEMY_NETWORK}
 							>
-								<option value={"ETH_MAINNET"}>Mainnet</option>
-								<option value={"MATIC_MAINNET"}>Polygon</option>
-								<option value={"ETH_GOERLI"}>Goerli</option>
-								<option value={"MATIC_MUMBAI"}>Mumbai</option>
+								<option value="ETH_MAINNET" key= "1">Mainnet</option>
+								<option value="MATIC_MAINNET" key= "2" >Polygon</option>
+								<option value="ETH_GOERLI" key= "3">Goerli</option>
+								<option value="MATIC_MUMBAI" key= "4">Mumbai</option>
 							</select>
 						</div>
 						<div
@@ -116,8 +192,46 @@ export default function NFTGallery({}) {
 						>
 							<a>Search</a>
 						</div>
+						<div
+							onClick={() => generateTextPrompt()}
+							className={styles.button_blue}
+						>
+							<a>Generate a Prompt!</a>
+						</div>
+						<div className={styles.button_green}> 
+							<a href="https://lenster.xyz/?text=Hello%20World!&url=https://mycoolapp.xyz&via=MyCoolApp&hashtags=lens,web3" 
+							target="_blank"> Share to Lens </a> 
+							
+						</div>
 					</div>
 				</div>
+				<br/>
+				{imagePrompt && (
+				<div className={styles.inputs_container_row}>
+				<textarea id="w3review" name="w3review" rows="4" cols="50" value={imagePrompt || ""}
+  onChange={(event) => setImagePrompt(event.target.value)}>
+				{`${imagePrompt}`}
+				</textarea>
+				<div
+					onClick={() => getNftImage()}
+					className={styles.button_green}
+				>
+					<a>Generate Art!</a>
+				</div>	
+				</div>
+				)}
+				<br/>
+				{imageUrl && (
+				<div className={styles.inputs_container_row}>
+					<img src={imageUrl}></img>
+					<div
+					onClick={() => getNftImage()}
+					className={styles.button_gold}
+				>
+					<a>Mint your Dynamic NFT!</a>
+				</div>	
+				</div>
+				)}
 			</div>
 
 			{isLoading ? (
@@ -125,44 +239,56 @@ export default function NFTGallery({}) {
 					<p>Loading...</p>
 				</div>
 			) : (
-				<div className={styles.nft_gallery}>
-					{nfts?.length && fetchMethod != "collection" && (
-						<div
-							style={{
-								display: "flex",
-								gap: ".5rem",
-								width: "100%",
-								justifyContent: "end",
-							}}
-						>
-							<p>Hide spam</p>
-							<label className={styles.switch}>
-								<input
-									onChange={(e) =>
-										setSpamFilter(e.target.checked)
-									}
-									checked={spamFilter}
-									type="checkbox"
-								/>
-								<span
-									className={`${styles.slider} ${styles.round}`}
-								></span>
-							</label>
-						</div>
-					)}
-
-					<div className={styles.nfts_display}>
+				<div className={styles.nfts_display}>
 						{nfts?.length ? (
 							nfts.map((nft) => {
-								return <NftCard key={nft.tokenId} nft={nft} />;
+								const isSelected = selectedNfts.findIndex((selectedNft) => selectedNft.tokenId === nft.tokenId) !== -1;
+								return <NftCard key={nft.tokenId} nft={nft} fetchMethod = {fetchMethod} isSelected={isSelected} onSelectNft={handleSelectNft}/>;
 							})
 						) : (
 							<div className={styles.loading_box}>
 								<p>No NFTs found for the selected address</p>
 							</div>
 						)}
-					</div>
 				</div>
+				// <div className={styles.nft_gallery}>
+				// 	{nfts?.length && fetchMethod != "collection" && (
+				// 		<div
+				// 			style={{
+				// 				display: "flex",
+				// 				gap: ".5rem",
+				// 				width: "100%",
+				// 				justifyContent: "end",
+				// 			}}
+				// 		>
+				// 			<p>Hide spam</p>
+				// 			<label className={styles.switch}>
+				// 				<input
+				// 					onChange={(e) =>
+				// 						setSpamFilter(e.target.checked)
+				// 					}
+				// 					checked={spamFilter}
+				// 					type="checkbox"
+				// 				/>
+				// 				<span
+				// 					className={`${styles.slider} ${styles.round}`}
+				// 				></span>
+				// 			</label>
+				// 		</div>
+				// 	)}
+
+				// 	<div className={styles.nfts_display}>
+				// 		{nfts?.length ? (
+				// 			nfts.map((nft) => {
+				// 				return <NftCard key={nft.tokenId} nft={nft} />;
+				// 			})
+				// 		) : (
+				// 			<div className={styles.loading_box}>
+				// 				<p>No NFTs found for the selected address</p>
+				// 			</div>
+				// 		)}
+				// 	</div>
+				// </div>
 			)}
 
 			{pageKey && nfts?.length && (
@@ -180,9 +306,12 @@ export default function NFTGallery({}) {
 		</div>
 	);
 }
-function NftCard({ nft }) {
+function NftCard({ nft, fetchMethod, isSelected, onSelectNft }) {
+	const handleClick = () => {
+		onSelectNft(nft);
+	  };
 	return (
-		<div className={styles.card_container}>
+		<div className={`${styles.card_container} ${isSelected ? styles.selected : ""}`} onClick={handleClick}>
 			<div className={styles.image_container}>
 				{nft.format == "png" ||
 				nft.format == "jpg" ||

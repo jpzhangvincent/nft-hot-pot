@@ -23,14 +23,21 @@
   row-gap: 1.5rem;
 }
 
+.inputs_container_row{
+display: flex;
+flex-direction: row;
+width: 100%;
+align-items: center;
+justify-content: center;
+gap: 1.5rem;
+}
+
 .input_button_container{
   width: 100%;
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
-
-
 
 .fetch_selector_container{
   display: flex;
@@ -90,6 +97,42 @@ width: 528px;
   border-radius: 8px;
   color: white;
   cursor: pointer;
+}
+
+.button_green{
+text-align: center;
+padding: .6rem 1rem;
+display: flex;
+border-radius: 3px;
+background-color: rgb(47, 213, 38);
+cursor: pointer;
+border-radius: 8px;
+color: white;
+cursor: pointer;
+}
+
+.button_gold{
+text-align: center;
+padding: .6rem 1rem;
+display: flex;
+border-radius: 3px;
+background-color: rgb(238, 216, 54);
+cursor: pointer;
+border-radius: 8px;
+color: white;
+cursor: pointer;
+}
+
+.button_blue{
+text-align: center;
+padding: .6rem 1rem;
+display: flex;
+border-radius: 3px;
+background-color: rgb(57, 76, 204);
+cursor: pointer;
+border-radius: 8px;
+color: white;
+cursor: pointer;
 }
 
 .select_container_alt select{
@@ -161,7 +204,7 @@ width: 528px;
 }
 
 .image_container {
-  height: 202px;
+  height: 300px;
   width: 100%;
   border-radius: 6px 6px 0 0;
 }
@@ -180,6 +223,9 @@ width: 528px;
   border-radius: 8px;
 }
 
+.selected {
+  border: 2px solid blue;
+}
 
 
 .info_container{

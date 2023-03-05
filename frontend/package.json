@@ -1,5 +1,5 @@
 {
-	"name": "camp-buidl",
+	"name": "nft-hotpot",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
@@ -10,11 +10,14 @@
 		"marketplace": "npx create-web3-dapp marketplace"
 	},
 	"dependencies": {
+		"@infura/sdk": "^2.1.5",
 		"@lens-protocol/wagmi": "^0.4.1",
 		"@rainbow-me/rainbowkit": "^0.8.1",
 		"alchemy-sdk": "^2.3.0",
+		"dotenv": "^16.0.3",
 		"lucide-react": "^0.118.0",
 		"next": "13.1.2",
+		"openai": "^3.2.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-spinners": "^0.13.8",
