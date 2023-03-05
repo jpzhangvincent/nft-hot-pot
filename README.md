@@ -86,9 +86,9 @@ NFT Hot Pot is a NFT AI generator that enables a user to select existing NFTs as
 - Covalent:  We primarily used Covalent to synthesize multiple images for analysis in addition to Node.js API integration testing, proving the API to be useful in multiple facets of integration.  But we also noticed that the data coverage of metadata from Covalent was lacking compared to the Alchemy API.
 - Graph: The build and deployment of a custom subgraph using the GraphQL API was successfully used to index data from a smart contract.  The blockchain data was queried to the dapp.
 - Infura: The Infura API key was not available to hackathon users the past few days.    We had requested the key to be released in the official ETHDenver discord to no avail.  As such, Infura was not implemented into the app.
-- Near Aurora: TBD
+- Near Aurora: Near Aurora was added as a layer.  The online documentation was easy to follow for the hardhat implementation.
 - Polygon: We not only decided to deploy to Polygon, but we deployed there first based on Polygon’s growing reputation and low fees in the space.
-- Base: TBD
+- Base: Base also proved to be an easy later to add, with minimal additions to the config file. 
 - Stellar: TBD
-- Scroll: TBD
+- Scroll: Scroll layer was also an easy add.  A challenge was that one of the docs on the bounty description was a dead URL.  We were still able to find resources online and add the network.
 - Lens: The Lens protocol share button was easily implemented into the front end, thanks to the html snippet provided in the tutorial.   The button worked as intended and highlighted the important of having easy to use buttons/widgets/attachments to pages when wanting to expand a protocol such as Lens.
