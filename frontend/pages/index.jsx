@@ -2,7 +2,6 @@ import styles from "../styles/Home.module.css";
 import InstructionsComponent from "../components/InstructionsComponent";
 import NftGallery from "../components/nftGallery.jsx"
 import NftCollectionInfoDisplay from "../components/nftCollectionInfoDisplay.jsx"
-import NFTMintingPage from "../components/NftMinter.jsx"
 
 export default function Home() {
   return (
