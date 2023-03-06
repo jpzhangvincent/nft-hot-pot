@@ -1,10 +1,10 @@
-# NFT Hot Pot: Traceable and Verifiable On-Chain AI Gen Platform
+# NFT Hot Pot: On-Chain AI Gen Platform
 
 [ETHDenver Presentation](https://docs.google.com/presentation/d/1qgnQlnpZBb8RAfWI0yK9XUZrxenIdtdG8moeLtU4OQg/edit?usp=sharing)
 
 [Deployed Web App](https://nft-hot-pot-poc.vercel.app/)
 
-NFT Hot Pot is a NFT AI generator that enables a user to select existing NFTs as inputs and generate a new unique NFT that mixes the artistic features of the inputed NFT’s.  The created NFT can be dynamically updated by being added to the mixer again.  The metadata of the input NFT's are extracted using the Covalent and Alchemy NFT API.  The metadata text is then used as input for ChatGPT to generate a DALL-E image prompt which is fed into DALL-E to generate an image.  Both the ChatGPT and DALL-E API's are called by Chainlink Functions.  The tool is available on the Ethereum, Polygon, Scroll, and NEAR Aurora chains with possibilities of other chains down the line. NFT Hot Pot provides a unique opportunity to combine and collaborate NFT’s across different collections.
+NFT Hot Pot is an on-chain NFT AI generator that enables a user to select existing NFTs as inputs and generate a new unique NFT that mixes the artistic features of the inputed NFT’s. The created NFT can be dynamically updated by being added to the mixer again.  The metadata of the input NFT's are extracted using the Covalent and Alchemy NFT API.  The metadata text is then used as input for ChatGPT to generate a DALL-E image prompt which is fed into DALL-E to generate an image.  Both the ChatGPT and DALL-E API's are called by Chainlink Functions.  The tool is available on the Ethereum, Polygon, Scroll, and NEAR Aurora chains with possibilities of other chains down the line. NFT Hot Pot provides a unique opportunity to combine and collaborate NFT’s across different collections.
 
 # **Problem Statement**
 
@@ -22,9 +22,10 @@ NFT Hot Pot is a NFT AI generator that enables a user to select existing NFTs as
 | Base Testnet   | NFTAIMixer    | [0x098914A6Cc4A2F5Cb0A626F2D0998F50A0b9504a](https://base-goerli.blockscout.com/address/0x098914A6Cc4A2F5Cb0A626F2D0998F50A0b9504a)  | backend/contract/NFTAIMixer.sol | `yarn deploy:baseTestnet`   |
 | Aurora Testnet | NFTAIMixer    | [0x378c52E95d11fa6F78E3B948936DefdF5981cfc8](https://explorer.testnet.aurora.dev/address/0x378c52E95d11fa6F78E3B948936DefdF5981cfc8) | backend/contract/NFTAIMixer.sol | `yarn deploy:auroraTestnet` |
 | Scroll Testnet | NFTAIMixer    | [0x378c52E95d11fa6F78E3B948936DefdF5981cfc8](https://blockscout.scroll.io/address/0x378c52E95d11fa6F78E3B948936DefdF5981cfc8) | backend/contract/NFTAIMixer.sol | `yarn deploy:scrollTestnet` |
-| Chainlink Functions |  OpenAIChatGPT-api    |  | chainlink_functions/OpenAIChatGPT-api.js | Contract Address: OxC5dd70292f94C9EA88a856d455C43974BA756824, Subscription ID: 272 |
-| Chainlink Functions |  OpenAIDALLE-api    |  | chainlink_functions/OpenAIDALLE-api.js | Contract Address: 0x454bf2056d13Aa85e24D9c0886083761dbE64965, Subscription ID: 279 |
+| Chainlink Functions |  OpenAIChatGPT-api    | OxC5dd70292f94C9EA88a856d455C43974BA756824 | chainlink_functions/OpenAIChatGPT-api.js | Subscription ID: 272 |
+| Chainlink Functions |  OpenAIDALLE-api    | 0x454bf2056d13Aa85e24D9c0886083761dbE64965 | chainlink_functions/OpenAIDALLE-api.js | Subscription ID: 279 |
 
+Since the workflow depends on the Chainlink Functions which only supports Eth and Polygon networks, the frontend UI focuses on the polygon mumbai integration.
 
 # Workflow
 
