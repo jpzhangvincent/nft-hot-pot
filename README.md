@@ -71,7 +71,7 @@ Note that the success is depending on the availability and quality of the NFT me
 
 # Video Demo
 
-[Video Demo]
+[Video Demo](https://www.youtube.com/watch?v=LB0xvEnllxI)
 
 # Future Improvements
 

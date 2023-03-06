@@ -20,6 +20,9 @@ export default async function autoPromptGeneration(req, res) {
     contextStr = selectedNftMetadata.reduce((acc, nd) => {
         console.log(acc,nd)
       let ndStr = "===============\n";
+      if (nd.name && nd.name !== "") {
+        ndStr += `Name: ${nd.name}\n`;
+      }
       if (nd.description && nd.description !== "") {
         ndStr += `Background: ${nd.description}\n`;
       }
@@ -33,6 +36,9 @@ export default async function autoPromptGeneration(req, res) {
     // Use all nftMetadata
     contextStr = nftMetadata.reduce((acc, nd) => {
       let ndStr = "===============\n";
+      if (nd.name && nd.name !== "") {
+        ndStr += `Name: ${nd.name}\n`;
+      }
       if (nd.nft_description && nd.nft_description !== "") {
         ndStr += `Background: ${nd.nft_description}\n`;
       }
@@ -43,7 +49,7 @@ export default async function autoPromptGeneration(req, res) {
     }, "");
   }
 
-  const imgGenPromptStr = `Given the objects with the following context:\n ${contextStr}\nCan you provide a description on the artwork you would like to create and convey a message based on the above context? Please make it as concise as possible.`;
+  const imgGenPromptStr = `Given the objects with the following context:\n ${contextStr}\nCan you provide a description on the artwork you would like to create and convey a message based on the above context? especially how different elements could interact or relate with each other. Please make it as concise as possible.`;
   console.log("Text Generation Prompt: ", imgGenPromptStr);
 
   try {
