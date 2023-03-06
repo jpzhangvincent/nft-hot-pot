@@ -1,12 +1,12 @@
-# [Read.me](http://Read.me)
+# NFT Hot Pot: Traceable On-Gen AI Gen Platform
 
 [ETHDenver Presentation](https://docs.google.com/presentation/d/1qgnQlnpZBb8RAfWI0yK9XUZrxenIdtdG8moeLtU4OQg/edit?usp=sharing)
 
-# NFT Hot Pot
+[Deployed Web App](https://nft-hot-pot-poc.vercel.app/)
 
 NFT Hot Pot is a NFT AI generator that enables a user to select existing NFTs as inputs and generate a new unique NFT that mixes the artistic features of the inputed NFT’s.  The created NFT can be dynamically updated by being added to the mixer again.  The metadata of the input NFT's are extracted using the Covalent and Alchemy NFT API.  The metadata text is then used as input for ChatGPT to generate a DALL-E image prompt which is fed into DALL-E to generate an image.  Both the ChatGPT and DALL-E API's are called by Chainlink Functions.  The tool is available on the Ethereum, Polygon, Scroll, and NEAR Aurora chains with possibilities of other chains down the line. NFT Hot Pot provides a unique opportunity to combine and collaborate NFT’s across different collections.
 
-# **Problems It Addresses**
+# **Problem Statement**
 
 - Collaboration Between NFT Projects: Foster friendship instead of hostility across NFT collections as there are few ways to have different NFT’s projects interact or integrate with each other
     - Increased Exposure: Collaboration between NFT collections can help to increase exposure and visibility for all the collections involved. By pooling audiences and cross-promoting each other's work, collections can reach a wider audience and attract new collectors and investors.
