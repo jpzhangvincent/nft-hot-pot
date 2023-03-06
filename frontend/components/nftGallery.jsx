@@ -201,7 +201,7 @@ export default function NFTGallery({}) {
 							<a>Generate a Prompt!</a>
 						</div>
 						<div className={styles.button_green}> 
-							<a href="https://lenster.xyz/?text=Hello%20World!&url=https://mycoolapp.xyz&via=MyCoolApp&hashtags=lens,web3" 
+							<a href="https://lenster.xyz/?text=Hello%20World!&url=https://nft-hot-pot-poc.vercel.app/&via=MyCoolApp&hashtags=lens,web3" 
 							target="_blank"> Share to Lens </a> 			
 						</div>
 					</div>
