@@ -1,4 +1,4 @@
-# NFT Hot Pot: Traceable On-Gen AI Gen Platform
+# NFT Hot Pot: Traceable and Verifiable On-Chain AI Gen Platform
 
 [ETHDenver Presentation](https://docs.google.com/presentation/d/1qgnQlnpZBb8RAfWI0yK9XUZrxenIdtdG8moeLtU4OQg/edit?usp=sharing)
 
@@ -8,11 +8,23 @@ NFT Hot Pot is a NFT AI generator that enables a user to select existing NFTs as
 
 # **Problem Statement**
 
+- It is the stepping stone for AI Gen tools on chain, where the use of NFT’s can create an creditable development platform and tracking system for generated art
 - Collaboration Between NFT Projects: Foster friendship instead of hostility across NFT collections as there are few ways to have different NFT’s projects interact or integrate with each other
     - Increased Exposure: Collaboration between NFT collections can help to increase exposure and visibility for all the collections involved. By pooling audiences and cross-promoting each other's work, collections can reach a wider audience and attract new collectors and investors.
 - Incentivize artists to move art on-chain to collect royalties if their art is used for generative creations
-- It is the stepping stone for AI Gen tools on chain, where the use of NFT’s can create an creditable development platform and tracking system for generated art
 - Finally, this will help fill a gap in the NFT space regarding the lack of dynamic NFT’s, as generated NFT’s can be changed further by being thrown back into the mixer, adding a whole slew of potential art and gamification possibilities.
+- Prompt engineering can be challenging for generative Art. We come up with an innovative approach to automatically suggest a "creative" prompt from chatGPT by synthesizing the NFT metadata with a pre-defined prompt. This helps lower the barriers for normal users to onboard and experient with web3 dApp.
+
+# Smart contract Deployment
+| Chain/Protocol          | Contract/Function Name | Contract Address                                                                                                                     | Code File                   | Note                        |
+|----------------|---------------|--------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|-----------------------------|
+| Polygon Mumbai | NFTAIMixer    | [0xe15560062F770d3fc89A8eFc0E4774dF8Be7F99b](https://mumbai.polygonscan.com/address/0xe15560062F770d3fc89A8eFc0E4774dF8Be7F99b#code) | backend/contract/NFTAIMixer.sol | ERC721 with royalty         |
+| Base Testnet   | NFTAIMixer    | [0x098914A6Cc4A2F5Cb0A626F2D0998F50A0b9504a](https://base-goerli.blockscout.com/address/0x098914A6Cc4A2F5Cb0A626F2D0998F50A0b9504a)  | backend/contract/NFTAIMixer.sol | `yarn deploy:baseTestnet`   |
+| Aurora Testnet | NFTAIMixer    | [0x378c52E95d11fa6F78E3B948936DefdF5981cfc8](https://explorer.testnet.aurora.dev/address/0x378c52E95d11fa6F78E3B948936DefdF5981cfc8) | backend/contract/NFTAIMixer.sol | `yarn deploy:auroraTestnet` |
+| Scroll Testnet | NFTAIMixer    | [0x378c52E95d11fa6F78E3B948936DefdF5981cfc8](https://blockscout.scroll.io/address/0x378c52E95d11fa6F78E3B948936DefdF5981cfc8) | backend/contract/NFTAIMixer.sol | `yarn deploy:scrollTestnet` |
+| Chainlink Functions |  OpenAIChatGPT-api    |  | chainlink_functions/OpenAIChatGPT-api.js | Contract Address: OxC5dd70292f94C9EA88a856d455C43974BA756824, Subscription ID: 272 |
+| Chainlink Functions |  OpenAIDALLE-api    |  | chainlink_functions/OpenAIDALLE-api.js | Contract Address: 0x454bf2056d13Aa85e24D9c0886083761dbE64965, Subscription ID: 279 |
+
 
 # Workflow
 
@@ -36,6 +48,8 @@ NFT Hot Pot is a NFT AI generator that enables a user to select existing NFTs as
     - Example:
         - Based on a description of the below characters, can you please provide a DALL-E image prompt detailing a picture involving the two? Character 1: Blue cloak Azuki female with rings. Character 2: Golden Bored Ape with pirate hat
 - User can edit prompt
+
+Note that the success is depending on the availability and quality of the NFT metadata, which supports the value and promise of bringing the creative art process on-chain. 
 
 ### Image Generation
 
