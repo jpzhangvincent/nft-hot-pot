@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Modal from '../components/Modal';
+import Modal from '../components/modal';
 import Result from '../components/Result';
 import styles from "../styles/NftGallery.module.css";
 import { useAccount } from "wagmi";
@@ -22,7 +22,9 @@ export default function NFTGallery({}) {
 	const [selectedNfts, setSelectedNfts] = useState([]);
 	const [nftDetails, setNftDetails] = useState([]);
 	const [imagePrompt, setImagePrompt] = useState(null);
+	const [isimagePromptLoading, setIsimagePromptloading] = useState(false);
 	const [imgs, setImgs] = useState();
+	const [isImgLoading, setIsImgloading] = useState(false);
 	const [imageUrl, setImageUrl] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [name, setName] = useState("");
@@ -68,6 +70,7 @@ export default function NFTGallery({}) {
 	};
 
 	const generateTextPrompt = async () => {
+		setIsimagePromptloading(true)
 		console.log("Text Prompt", chain)
 		if (selectedNfts.length > 0) {
 		  const detailsPromises = selectedNfts.map(async (nft) => {
@@ -100,9 +103,11 @@ export default function NFTGallery({}) {
 			console.log(res)
 			setImagePrompt(res.imagePrompt.content);
 		}
+		setIsimagePromptloading(false)
 	};
 
 	const getNftImage = async () => {
+		setIsImgloading(true)
 		const res = await fetch('/api/getNftImage', {
 			method: "POST",
 			'Content-Type': 'application/json',
@@ -110,10 +115,11 @@ export default function NFTGallery({}) {
 				imagePrompt
 			}),
 			}).then((res) => res.json());
-			setImgs(res);
-			const imageUrl = res[0].url;
-			console.log("Generated Image URL:", imageUrl)	
-			setImageUrl(imageUrl)
+		setImgs(res);
+		const imageUrl = res[0].url;
+		console.log("Generated Image URL:", imageUrl)	
+		setImageUrl(imageUrl)
+		setIsImgloading(false)
 	};
 
 	const handleMintClick = (imgUrl) => {
@@ -272,11 +278,11 @@ export default function NFTGallery({}) {
 							className={styles.button_black}
 						>
 							<a>Search</a>
-						</div>
+						</div>					
 						<div
 							onClick={() => generateTextPrompt()}
 							className={styles.button_blue}
-						>
+							> 
 							<a>Generate a Prompt!</a>
 						</div>
 						<div className={styles.button_green}> 
@@ -286,6 +292,11 @@ export default function NFTGallery({}) {
 					</div>
 				</div>
 				<br/>
+				{isimagePromptLoading ? (
+							<div className={styles.loading_box}>
+								<p>Generating a prompt...</p>
+							</div>
+				) : null}
 				{imagePrompt && (
 				<div className={styles.inputs_container_row}>
 				<textarea id="w3review" name="w3review" rows="4" cols="50" value={imagePrompt || ""}
@@ -301,6 +312,11 @@ export default function NFTGallery({}) {
 				</div>
 				)}
 				<br/>
+				{isImgLoading ? (
+							<div className={styles.loading_box}>
+								<p>Generating an image...</p>
+							</div>
+				) : null}
 				{imageUrl && (
 				<div className={styles.inputs_container_row}>
 					<img src={imageUrl}></img>
