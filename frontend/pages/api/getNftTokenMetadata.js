@@ -31,6 +31,7 @@ req,res
           tags: nftMetadata.rawMetadata.attributes,
           description: nftMetadata.description,
           id: nftMetadata.tokenUri.raw,
+          creator: nftMetadata.contract.contractDeployer
       });
     } else {
       res.status(400).json({

@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import Modal from '../components/Modal';
+import Result from '../components/Result';
 import styles from "../styles/NftGallery.module.css";
 import { useAccount } from "wagmi";
-
-const contracaddress = '0xe15560062F770d3fc89A8eFc0E4774dF8Be7F99b' 
+import {
+    getCurrentWalletConnected,
+    mintNFT,
+} from "../utils/interact.js";
 
 export default function NFTGallery({}) {
 	const [nfts, setNfts] = useState();
@@ -13,11 +17,19 @@ export default function NFTGallery({}) {
 	const [spamFilter, setSpamFilter] = useState(true);
 	const [isLoading, setIsloading] = useState(false);
 	const { address, isConnected } = useAccount();
+	const [wallet, setWallet] = useState("");
 	const [chain, setChain] = useState(process.env.NEXT_PUBLIC_ALCHEMY_NETWORK);
 	const [selectedNfts, setSelectedNfts] = useState([]);
 	const [nftDetails, setNftDetails] = useState([]);
 	const [imagePrompt, setImagePrompt] = useState(null);
+	const [imgs, setImgs] = useState();
 	const [imageUrl, setImageUrl] = useState(null);
+	const [modal, setModal] = useState(false);
+	const [name, setName] = useState("");
+  	const [description, setDescription ] = useState("");
+	const [minting, setMinting ] = useState(false);
+	const [status, setStatus] = useState("");
+	const [result, setResult] = useState(false);
 
 	useEffect(() => {
 		// Here, you can add any logic that you want to happen immediately
@@ -25,7 +37,7 @@ export default function NFTGallery({}) {
 		console.log(selectedNfts);
 	  }, [selectedNfts]);
 	
-	  const handleSelectNft = (nft) => {
+	const handleSelectNft = (nft) => {
 		const index = selectedNfts.findIndex((selectedNft) => selectedNft.tokenId === nft.tokenId);
 		if (index !== -1) {
 		  setSelectedNfts((prevSelectedNfts) => {
@@ -42,7 +54,6 @@ export default function NFTGallery({}) {
 		switch (e.target.value) {
 			case "wallet":
 				setWalletOrCollectionAddress("vitalik.eth");
-
 				break;
 			case "collection":
 				setWalletOrCollectionAddress(
@@ -72,8 +83,8 @@ export default function NFTGallery({}) {
 			}).then((res) => {
 				return (res.json())});
 			console.log("Metadata response:", res)
-			const { name, tags, description, id } = res;
-			return { name, tags, description, id };
+			const { name, tags, description, id, creator } = res;
+			return { name, tags, description, id, creator };
 		  });
 	  
 		  const nftDetailsTemp = await Promise.all(detailsPromises);
@@ -99,10 +110,75 @@ export default function NFTGallery({}) {
 				imagePrompt
 			}),
 			}).then((res) => res.json());
-			console.log(res.imageUrl)
-			const imageUrl = res.imageUrl;
+			setImgs(res);
+			const imageUrl = res[0].url;
+			console.log("Generated Image URL:", imageUrl)	
 			setImageUrl(imageUrl)
-			// Download image from URL
+	};
+
+	const handleMintClick = (imgUrl) => {
+		setImageUrl(imgUrl)
+		setModal(true);
+	};
+
+	const handleUseEffect = async () => {
+		const { address, status } = await getCurrentWalletConnected();
+		setWallet(address);
+	  }
+	
+	function addWalletListener() {
+        if (window.ethereum) {
+            window.ethereum.on("accountsChanged", (accounts) => {
+                if (accounts.length > 0) {
+                    setWallet(accounts[0]);
+                } else {
+                    setWallet("");
+                }
+            });
+        } else {
+            setStatus(
+                <p>
+                    {" "}
+                    🦊{" "}
+                    <a
+                        target="_blank"
+                        href={`https://metamask.io/download.html`}
+                    >
+                        You must install Metamask, a virtual Ethereum wallet, in
+                        your browser.
+                    </a>
+                </p>
+            );
+        }
+    }
+
+	useEffect(() => {
+		   handleUseEffect()
+		   addWalletListener(); 
+	   }, []);
+
+	const onMintPressed = async () => { 
+		setMinting(true);
+		// upload image file
+		const response = await fetch("/api/uploadImgFile", {
+			method: "POST",
+			body: JSON.stringify(imageUrl),
+		});
+		const data = await response.json();
+		console.log("OnMintPressed: ", data)
+
+		//const royaltyReceiverAddress = nftDetails[0].creator
+		// upload metadata json file
+		const { status } = await mintNFT(
+			address,
+			`https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`,
+			name,
+			description
+		)
+		setStatus(status);
+		setMinting(false);
+		setModal(false);
+		setResult(true);
 	};
 	
 	const fetchNFTs = async (pagekey) => {
@@ -226,7 +302,7 @@ export default function NFTGallery({}) {
 				<div className={styles.inputs_container_row}>
 					<img src={imageUrl}></img>
 					<div
-					onClick={() => getNftImage()}
+					onClick={() => handleMintClick(imageUrl)}
 					className={styles.button_gold}
 				>
 					<a>Mint your Dynamic NFT!</a>
@@ -252,6 +328,7 @@ export default function NFTGallery({}) {
 							</div>
 						)}
 				</div>
+				
 				// <div className={styles.nft_gallery}>
 				// 	{nfts?.length && fetchMethod != "collection" && (
 				// 		<div
@@ -291,6 +368,25 @@ export default function NFTGallery({}) {
 				// 	</div>
 				// </div>
 			)}
+
+			{modal ? (
+				<Modal
+					setModal={setModal}
+					minting={minting}
+					status={status}
+					setStatus={setStatus}
+					img={imageUrl}
+					name={name}
+					setName={setName}
+					setDescription={setDescription}
+					description={description}
+					onMintPressed={onMintPressed}
+				></Modal>
+			) : null}
+
+			{result ? (
+              <Result setResult={setResult} status={status}></Result>
+          	) : null}
 
 			{pageKey && nfts?.length && (
 				<div>

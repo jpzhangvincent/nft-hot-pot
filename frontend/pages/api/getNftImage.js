@@ -16,8 +16,8 @@ export default async function autoPromptGeneration(req, res) {
       response_format: 'url'
     });
     console.log(response.data.data[0].url)
-    const imageUrl = response.data.data[0].url;
-    res.status(200).json({ imageUrl });
+    //const imageUrl = response.data.data[0].url;
+    res.status(200).json(response.data.data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.toString() });

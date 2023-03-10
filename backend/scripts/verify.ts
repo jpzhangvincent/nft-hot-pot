@@ -5,9 +5,9 @@ async function main() {
   let [admin]: SignerWithAddress[] = await ethers.getSigners();
 
   await run("verify:verify", {
-    address: mumbai.campBuidl,
+    address: mumbai.NFTAIMixer,
     constructorArguments: [],
-    contract: "contracts/CampBuidl.sol:CampBuidl",
+    contract: "contracts/NFTAIMixer.sol:NFTAIMixer",
   }).catch(console.log);
   return "Done";
 }

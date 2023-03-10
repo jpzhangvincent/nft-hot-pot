@@ -54,6 +54,12 @@ const config = {
       accounts: [process.env.PRIVATE_KEY] // Uses the private key from the .env file
     }
   },
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
+  },
   typechain: {
     outDir: "typechain",
     target: "ethers-v5",

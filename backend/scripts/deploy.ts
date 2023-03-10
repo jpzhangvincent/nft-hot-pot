@@ -6,17 +6,17 @@ async function main() {
   let [admin]: SignerWithAddress[] = await ethers.getSigners();
 
   console.log("deploying...");
-  let campBuidl: NFTAIMixer = await (
+  let nftaimixer: NFTAIMixer = await (
     await new NFTAIMixer__factory(admin).deploy()
   ).deployed();
 
-  campBuidl.deployTransaction.wait(5);
-  console.log("campBuidl Address", campBuidl.address);
+  nftaimixer.deployTransaction.wait(5);
+  console.log("NFTAIMixer Contract Address", nftaimixer.address);
 
   await run("verify:verify", {
-    address: campBuidl.address,
+    address: nftaimixer.address,
     constructorArguments: [],
-    contract: "contracts/CampBuidl.sol:CampBuidl",
+    contract: "contracts/NFTAIMixer.sol:NFTAIMixer",
   }).catch(console.log);
 }
 
