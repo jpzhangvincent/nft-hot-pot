@@ -49,7 +49,7 @@ export const getCurrentWalletConnected = async () => {
     }
 };
 
-export const mintNFT = async (address, url, name, description) => {
+export const mintNFT = async (address, url, name, description, imagePrompt, nftDetails) => {
     //error handling
     if (url.trim() == "" || name.trim() == "" || description.trim() == "") {
         return {
@@ -63,6 +63,9 @@ export const mintNFT = async (address, url, name, description) => {
     metadata.name = name;
     metadata.image = url;
     metadata.description = description;
+    metadata.composedNFTDetails = nftDetails;
+    metadata.attributes = [{"trait_type": "model", "value": "OPENAI-DALLE"}, 
+                           {"trait_type": "imagePrompt", "value": imagePrompt}]
 
     //pinata pin request
     const pinataGet = await fetch("/api/uploadMetadataJson", {

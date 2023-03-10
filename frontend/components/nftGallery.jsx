@@ -173,7 +173,9 @@ export default function NFTGallery({}) {
 			address,
 			`https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`,
 			name,
-			description
+			description,
+			imagePrompt,
+			nftDetails
 		)
 		setStatus(status);
 		setMinting(false);
@@ -184,6 +186,7 @@ export default function NFTGallery({}) {
 	const fetchNFTs = async (pagekey) => {
 		setIsloading(true);
 		setNfts();
+		setSelectedNfts([]);
 		const endpoint =
 			fetchMethod == "wallet" || fetchMethod == "connectedWallet"
 				? "/api/getNftsForOwner"

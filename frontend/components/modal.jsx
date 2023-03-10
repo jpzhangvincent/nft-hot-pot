@@ -38,7 +38,7 @@ export default function Modal(props){
                             className={styles.mint}
                             onClick={props.onMintPressed}
                         >
-                            Mint NFT
+                            Mint NFT on Polygon
                         </div>
                     )}
                 </div>
