@@ -5,6 +5,7 @@ export default function Modal(props){
     const handleOutClick = () => {
         props.setModal(false);
         props.setStatus(null);
+        props.setMinting(false)
     }
     return (
         <div className={styles.Modal}>
