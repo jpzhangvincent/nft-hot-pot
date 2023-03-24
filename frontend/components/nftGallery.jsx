@@ -70,6 +70,8 @@ export default function NFTGallery({}) {
 	};
 
 	const generateTextPrompt = async () => {
+		setImageUrl(null)
+		setImagePrompt(null)
 		setIsimagePromptloading(true)
 		console.log("Text Prompt", chain)
 		if (selectedNfts.length > 0) {
@@ -164,29 +166,35 @@ export default function NFTGallery({}) {
 	   }, []);
 
 	const onMintPressed = async () => { 
-		setMinting(true);
-		// upload image file
-		const response = await fetch("/api/uploadImgFile", {
-			method: "POST",
-			body: JSON.stringify(imageUrl),
-		});
-		const data = await response.json();
-		console.log("OnMintPressed: ", data)
+		console.log("OnMintPressed - adress: ", address)
 
 		//const royaltyReceiverAddress = nftDetails[0].creator
 		// upload metadata json file
-		const { status } = await mintNFT(
-			address,
-			`https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`,
-			name,
-			description,
-			imagePrompt,
-			nftDetails
-		)
-		setStatus(status);
-		setMinting(false);
-		setModal(false);
-		setResult(true);
+		if (address) {
+			setMinting(true);
+			// upload image file
+			const response = await fetch("/api/uploadImgFile", {
+				method: "POST",
+				body: JSON.stringify(imageUrl),
+			});
+			const data = await response.json();
+			console.log("OnMintPressed: ", data)
+			const { status } = await mintNFT(
+				address,
+				`https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`,
+				name,
+				description,
+				imagePrompt,
+				nftDetails
+			)
+			setStatus(status);
+			setMinting(false);
+			setModal(false);
+			setResult(true);
+		} else {
+			setModal(false);
+			setMinting(false);
+		}
 	};
 	
 	const fetchNFTs = async (pagekey) => {
@@ -323,7 +331,7 @@ export default function NFTGallery({}) {
 					<div
 					onClick={() => handleMintClick(imageUrl)}
 					className={styles.button_gold}
-				>
+					>
 					<a>Mint your Dynamic NFT!</a>
 				</div>	
 				</div>
@@ -390,8 +398,10 @@ export default function NFTGallery({}) {
 
 			{modal ? (
 				<Modal
+					address={address}
 					setModal={setModal}
 					minting={minting}
+					setMinting={setMinting}
 					status={status}
 					setStatus={setStatus}
 					img={imageUrl}

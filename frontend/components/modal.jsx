@@ -28,7 +28,7 @@ export default function Modal(props){
                         onInput={(e) => props.setDescription(e.target.value)}
                         value={props.description}
                     ></input>
-                    {props.minting ? (
+                    { props.address ? (props.minting ? (
                         <div
                             className={styles.minting}
                         >
@@ -41,7 +41,12 @@ export default function Modal(props){
                         >
                             Mint NFT on Polygon
                         </div>
-                    )}
+                    )) : <div
+                            className={styles.mint}
+                            onClick={handleOutClick}
+                        >
+                            Connect to your wallet first
+                        </div>}
                 </div>
                 {props.status ? (
                     <div className={styles.status}>
